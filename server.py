@@ -49,17 +49,6 @@ def add_item():
 		return jsonify({'items': item})
 	finally:
 		c.disconnect()
-
-@app.route('/item/<item_id>', methods=["DELETE"])
-def delete_item():
-	c = pymongo.Connection()
-	try:
-		c.pinr.items.remove({'_id': bson.ObjectId(item_id)})
-		return "OK"
-	except bson.errors.InvalidId:
-		abort(400)
-	finally:
-		c.disconnect()
 ###E Validators
 
 
