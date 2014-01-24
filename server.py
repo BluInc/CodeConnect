@@ -23,7 +23,7 @@ def index():
 
 @app.route('/items')
 def get_items():
-	c = pymongo.Connection()
+	c = pymongo.Connection(os.getenv('MONGOHQ_URL'))
 	try:
 		data = []
 		for item in list(c.pinr.items.find()):
@@ -36,7 +36,7 @@ def get_items():
 
 @app.route('/items', methods=['POST'])
 def add_item():
-	c = pymongo.Connection()
+	c = pymongo.Connection(os.getenv('MONGOHQ_URL'))
 	try:
 		item = request.json
 		item['date'] = datetime.now()

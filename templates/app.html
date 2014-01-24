@@ -76,7 +76,7 @@
 <div id="lightbox" ng-show="showThis" ng-click="showThis=false" style="margin-top: 50px;">
     <div id="lightbox-content" ng-switch on="selection.type">
         <span ng-switch-when="text" class="text-content">{{selection.text}}</span>
-        <div ng-switch-when="image"><p>{{selection.image_caption}}</p><img src="{{selection.image_url}}"></img></div>
+        <div ng-switch-when="image"><p>{{selection.image_caption}}</p><!-- <img src="{{selection.image_url}}"></img> --><iframe src="https://docs.google.com/a/college.harvard.edu/forms/d/1vTaZAbp24HsEGHzAGA4c-Q0GVXUxf2-dsSdeb4JrWIE/viewform?embedded=true" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div>
         <div ng-switch-when="video"><iframe width="560" height="315" src="http://www.youtube.com/embed/{{selection.video_id}}?rel=0" frameborder="0" allowfullscreen></iframe></div>
     </div>
 </div>
