@@ -1,16 +1,21 @@
 #!/usr/bin/env python
 
 """
-    Pinr
+    CodeConnect
     ~~~~
-    A Flask-based web app where you can post and share images, text and links.
+    A Flask-based web app where you can discover internships, tech events, and mentors.
 """
 
 # imports
 from flask import Flask, render_template, request, abort, jsonify
-import pymongo, bson, json
+import bson, json
+from pymongo import MongoClient
 from datetime import datetime
 from urllib2 import urlopen
+
+''' Global Vars '''
+mongodb_url = "mongodb://admin:CodeConnect@troup.mongohq.com:10008/CodeConnect"
+
 
 #### App
 app = Flask(__name__)
@@ -23,10 +28,10 @@ def index():
 
 @app.route('/items')
 def get_items():
-	c = pymongo.Connection(os.getenv('MONGOHQ_URL'))
+	db = MongoClient(mongodb_url)
 	try:
 		data = []
-		for item in list(c.pinr.items.find()):
+		for item in list(c.CodeConnect.items.find()):
 			item['date'] = item['date'].isoformat()
 			item['_id'] = str(item['_id'])
 			data.append(item)
@@ -36,12 +41,12 @@ def get_items():
 
 @app.route('/items', methods=['POST'])
 def add_item():
-	c = pymongo.Connection(os.getenv('MONGOHQ_URL'))
+	c = MongoClient(mongodb_url)
 	try:
 		item = request.json
 		item['date'] = datetime.now()
 		item['ip_addr'] = request.remote_addr
-		item_id = c.pinr.items.insert(item)
+		item_id = c.CodeConnect.items.insert(item)
 
 		# Make ID and Date JSON Serializable
 		item['_id'] = str(item_id)
@@ -49,8 +54,19 @@ def add_item():
 		return jsonify({'items': item})
 	finally:
 		c.disconnect()
-###E Validators
 
+@app.route('/item/<item_id>', methods=["DELETE"])
+def delete_item(item_id):
+    c = MongoClient(mongodb_url)
+    try:
+        c.CodeConnect.items.remove({'_id': bson.ObjectId(item_id)})
+        return "OK"
+    except bson.errors.InvalidId:
+        abort(400)
+    finally:
+        c.disconnect()
+
+#### Validators
 
 #### Server initialization
 if __name__ == '__main__':
