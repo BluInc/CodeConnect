@@ -28,7 +28,7 @@ def index():
 
 @app.route('/items')
 def get_items():
-	db = MongoClient(mongodb_url)
+	c = MongoClient(mongodb_url)
 	try:
 		data = []
 		for item in list(c.CodeConnect.items.find()):
