@@ -28,11 +28,12 @@ function getVideoId(url) {
         });
     }
     $scope.addImage = function() {
-        var data = {image_url: $scope.image_url, type: 'image'}
+        var data = {image_url: $scope.image_url, image_caption: $scope.image_caption, type: 'image'}
         $http.post('/items', data).success(function(data) {
             $scope.items.push(data.items);
             $(".dropdown").hide();
             $scope.image_url = "";
+            $scope.image_caption = "";
         });
     }
     $scope.remove = function(item) {

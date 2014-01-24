@@ -7,7 +7,7 @@
 """
 
 # imports
-from flask import Flask, render_template, request, abort, jsonify
+from flask import Flask, render_template, request, abort, jsonify, make_response
 import bson, json
 from pymongo import MongoClient
 from datetime import datetime
@@ -24,7 +24,10 @@ app = Flask(__name__)
 #### URLs for serving web pages
 @app.route('/')
 def index():
-    return render_template('index.html')
+	# resp = make_response(render_template('index.html'))
+	# resp.headers['X-Frame-Options'] = 'ALLOW'
+	# return resp
+	return render_template('index.html')
 
 @app.route('/items')
 def get_items():
@@ -70,4 +73,4 @@ def delete_item(item_id):
 
 #### Server initialization
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0',debug=True)

@@ -8,12 +8,13 @@
 
 
 <!-- Navigation -->
+<span>CodeConnect</span>
 <nav>
     <ul>
-        <li ng-click="showMenu('#add-text-menu')">Add Text</li>
-        <li ng-click="showMenu('#add-image-menu')">Add Image</li>
-        <li ng-click="showMenu('#add-video-menu')">Add Youtube</li>
-        <li ng-click="showMenu('#filter-menu')">Filter</li>
+        <li ng-click="showMenu('#add-text-menu')">Events</li>
+        <li ng-click="showMenu('#add-image-menu')">Internships</li>
+        <li ng-click="showMenu('#add-video-menu')">Mentors</li>
+        <li ng-click="showMenu('#filter-menu')">Find</li>
     </ul>
 </nav>
 
@@ -21,8 +22,10 @@
 <!-- Dropdown Menu Forms -->
 <div class="dropdown" id="add-text-menu">
     <form ng-submit="addText()">
-        <label>Text</label>
-        <textarea name="entry" ng-model="text"></textarea>
+        <label>Event Url</label>
+        <input type="text" ng-model="event_url">
+        <label>Logo Image Url</label>
+        <input type="text" ng-model="logo_url">
         <input type="submit" />
     </form>
 </div>
@@ -46,12 +49,12 @@
 </div>
 
 <div class="dropdown" id="filter-menu">
-    <label>Show:</label>
-    <input type="checkbox" ng-model = "filter_text">text</input>
+    <!-- <label>Show:</label> -->
+    <input type="checkbox" ng-model = "filter_text">Events</input>
     <br/>
-    <input type="checkbox" ng-model = "filter_image">images</input>
+    <input type="checkbox" ng-model = "filter_image">Internships</input>
     <br/>
-    <input type="checkbox" ng-model = "filter_video">videos</input>
+    <input type="checkbox" ng-model = "filter_video">Mentors</input>
 </div>
 
 
@@ -60,7 +63,7 @@
     <div class="item item-{{item.type}}" ng-repeat="item in items | filter:isActive" ng-click="$parent.showThis = true; $parent.selection = item">
         <div ng-switch on="item.type">
         <div ng-switch-when="text">{{item.text}}</div>
-        <div ng-switch-when="image">
+        <div ng-switch-when="image">{{item.image_caption}}
             <img src="{{item.image_url}}" 
                  width=300 height=200></div>
         </div>
@@ -76,7 +79,7 @@
 <div id="lightbox" ng-show="showThis" ng-click="showThis=false" style="margin-top: 50px;">
     <div id="lightbox-content" ng-switch on="selection.type">
         <span ng-switch-when="text" class="text-content">{{selection.text}}</span>
-        <div ng-switch-when="image"><p>{{selection.image_caption}}</p><!-- <img src="{{selection.image_url}}"></img> --><iframe src="https://docs.google.com/a/college.harvard.edu/forms/d/1vTaZAbp24HsEGHzAGA4c-Q0GVXUxf2-dsSdeb4JrWIE/viewform?embedded=true" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div>
+        <div ng-switch-when="image"><p>{{selection.image_caption}}</p><!-- <img src="{{selection.image_url}}"></img> --><iframe src="https://docs.google.com/forms/d/1xXeiaotsbt5HX-p4oIwqyUc-4w6Qt-EWimiOJyUyUfk/viewform?embedded=true" width="900" height="835" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div>
         <div ng-switch-when="video"><iframe width="560" height="315" src="http://www.youtube.com/embed/{{selection.video_id}}?rel=0" frameborder="0" allowfullscreen></iframe></div>
     </div>
 </div>
