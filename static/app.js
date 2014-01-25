@@ -20,11 +20,12 @@ function getVideoId(url) {
         }
     }
     $scope.addText = function() {
-        var data = {text: $scope.text, type: 'text'}
+        var data = {event_url: $scope.event_url, logo_url: $scope.logo_url,type: 'text'}
         $http.post('/items', data).success(function(data) {
             $scope.items.push(data.items);
             $(".dropdown").hide();
-            $scope.text = "";
+            $scope.event_url = "";
+            $scope.logo_url = "";
         });
     }
     $scope.addImage = function() {
@@ -34,6 +35,15 @@ function getVideoId(url) {
             $(".dropdown").hide();
             $scope.image_url = "";
             $scope.image_caption = "";
+        });
+    }
+    $scope.addVideo = function() {
+        var data = {name_txt: $scope.name_txt, selfie_url: $scope.selfie_url, type: 'video'}
+        $http.post('/items', data).success(function(data) {
+            $scope.items.push(data.items);
+            $(".dropdown").hide();
+            $scope.name_txt = "";
+            $scope.selfie_url = "";
         });
     }
     $scope.remove = function(item) {

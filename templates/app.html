@@ -32,7 +32,7 @@
 
 <div class="dropdown" id="add-image-menu">
     <form ng-submit="addImage()">
-        <label>Image Url</label>
+        <label>Company Logo Url</label>
         <input type="text" ng-model="image_url">
         <label>Caption</label>
         <textarea name="caption" ng-model="image_caption"></textarea>
@@ -41,9 +41,11 @@
 </div>
 
 <div class="dropdown" id="add-video-menu">
-    <form>
-        <label>Youtube Url</label>
-        <input type="text">
+    <form ng-submit="addVideo()">
+        <label>Name</label>
+        <input type="text" ng-model="name_txt">
+        <label>Selfie Url</label>
+        <input type="text" ng-model="selfie_url">
         <input type="submit" />
     </form>
 </div>
@@ -62,10 +64,9 @@
 <div class="items">
     <div class="item item-{{item.type}}" ng-repeat="item in items | filter:isActive" ng-click="$parent.showThis = true; $parent.selection = item">
         <div ng-switch on="item.type">
-        <div ng-switch-when="text">{{item.text}}</div>
-        <div ng-switch-when="image">{{item.image_caption}}
-            <img src="{{item.image_url}}" 
-                 width=300 height=200></div>
+        <div ng-switch-when="text"><img src="{{item.logo_url}}" width=300 height=200></div>
+        <div ng-switch-when="image">{{item.image_caption}}<img src="{{item.image_url}}" width=300 height=200></div>
+        <div ng-switch-when="video">{{item.name_txt}}<img src="{{item.selfie_url}}" width=300 height=200></div>
         </div>
     </div>
 </div>
@@ -78,9 +79,9 @@
 </div>
 <div id="lightbox" ng-show="showThis" ng-click="showThis=false" style="margin-top: 50px;">
     <div id="lightbox-content" ng-switch on="selection.type">
-        <span ng-switch-when="text" class="text-content">{{selection.text}}</span>
+        <div ng-switch-when="text"><iframe src="{{selection.event_url}}" width="900" height="835" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div>
         <div ng-switch-when="image"><p>{{selection.image_caption}}</p><!-- <img src="{{selection.image_url}}"></img> --><iframe src="https://docs.google.com/forms/d/1xXeiaotsbt5HX-p4oIwqyUc-4w6Qt-EWimiOJyUyUfk/viewform?embedded=true" width="900" height="835" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div>
-        <div ng-switch-when="video"><iframe width="560" height="315" src="http://www.youtube.com/embed/{{selection.video_id}}?rel=0" frameborder="0" allowfullscreen></iframe></div>
+        <div ng-switch-when="video"><iframe src="https://docs.google.com/forms/d/1PvRPD7_3qol_SGPcmPgiMTgJ8fAVoVXfMwmyjaei_J8/viewform?embedded=true" width="900" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div>
     </div>
 </div>
 
